@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  app:
+    image: kyuknis/extrip:latest
+    working_dir: /home
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: extrip
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - extrip-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: extrip-db
+
+volumes:
+  extrip-mysql-data:
