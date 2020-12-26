@@ -3,9 +3,11 @@ version: "3.7"
 services:
 
   ip-inquisitor:
-    image: kyuknis/extrip/ip-inquisitor:latest
+    image: kyuknis/extrip:latest
     networks:
-      - extrip-network
+      extrip-network:
+        aliases:
+            - ip-inquisitor
     working_dir: /home
     environment:
       MYSQL_HOST: mysql
@@ -16,7 +18,9 @@ services:
   mysql:
     image: mysql:5.7
     networks:
-      - extrip-network
+      extrip-network:
+        aliases:
+            - mysql
     ports:
       - 3306:3306
     volumes:
@@ -28,14 +32,18 @@ services:
   kafka-zookeeper:
     image: kyuknis/kafka/zookeeper:2.7.0
     networks:
-      - extrip-network
+      extrip-network:
+          aliases:
+            - zookeeper
     volumes:
       - extrip-kafka-data:/tmp/zookeeper
 
   kafka-server:
-    image: kyuknis/kafka/server:2.7.0
+    image: kyuknis/kafka/kafka:2.7.0
     networks:
-      - extrip-network
+      extrip-network:
+        aliases:
+            - kafka
 
 volumes:
   extrip-mysql-data:
